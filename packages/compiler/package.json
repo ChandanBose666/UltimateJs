@@ -1,0 +1,9 @@
+{
+  "name": "@nexus/compiler",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cargo build --release",
+    "dev": "cargo watch -x 'build --release'"
+  }
+}

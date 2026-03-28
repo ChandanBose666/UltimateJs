@@ -1,0 +1,37 @@
+# Rust
+target/
+Cargo.lock
+*.pdb
+
+# Node
+node_modules/
+dist/
+.cache/
+
+# pnpm
+.pnpm-store/
+
+# Vite
+apps/web/dist/
+apps/web/.vite/
+
+# Turbo
+.turbo/
+
+# Nexus compiler output
+.nexus/
+*.wasm
+pkg/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
