@@ -91,8 +91,10 @@ src/
 
 - [x] Task 2.4 — Vite Plugin + Rust CLI binary (`nexus-compiler`) with stdin/stdout JSON bridge
 
+- [x] Task 3.1 — Core Interface: TypeScript types for `<Stack>`, `<Text>`, `<Action>`, `<Input>` + `NexusRenderer<TNode>` contract
+
 ## In Progress
-- [ ] Task 3.1 — Define Core Interface: TypeScript types for `<Stack>`, `<Text>`, `<Action>`, `<Input>`
+- [ ] Task 3.2 — Web Renderer: maps primitives to HTML + Tailwind classes
 
 ## Turborepo Pipeline Logic
 - `build` depends on `^build` — upstream packages build first

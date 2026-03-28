@@ -97,8 +97,10 @@ pnpm dev
 | 2.2 | SecretScanner (process.env, DB imports) | ✅ Done |
 | 2.3 | Slicer — Classifier + Transformer + RPC stubs | ✅ Done |
 | 2.4 | Vite Plugin + Rust CLI binary | ✅ Done |
-| 3.1 | Semantic UI — Core Interface types | 🔨 Next |
-| 3.x | Semantic UI — Web/Native/Email renderers | ⏳ Planned |
+| 3.1 | Semantic UI — Core Interface types | ✅ Done |
+| 3.2 | Semantic UI — Web Renderer (HTML + Tailwind) | 🔨 Next |
+| 3.3 | Semantic UI — Native Renderer (React Native) | ⏳ Planned |
+| 3.4 | Semantic UI — Email Renderer (MJML) | ⏳ Planned |
 | 4.x | Zero-Fetch Sync (CRDT + WebSocket) | ⏳ Planned |
 | 5.x | Error Resilience & Nexus Inspector | ⏳ Planned |
 
