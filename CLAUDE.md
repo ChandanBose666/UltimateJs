@@ -125,6 +125,7 @@ src/
 
 - [x] Task 3.4 — Email Renderer: `@nexus/email` — maps all four primitives to MSO-safe HTML strings
 - [x] Task 4.1 — WASM Bridge: `@nexus/crdt` — Automerge CRDT document compiled to WebAssembly via wasm-pack
+- [x] Task 4.2 — useSync hook: `@nexus/core` — React hook connecting CRDT doc to WebSocket transport
 
 ## Email Renderer design decisions (Task 3.4)
 - TNode = string — the only renderer that doesn't use React; all functions return raw HTML strings
@@ -140,7 +141,21 @@ src/
 - 40 unit tests cover all four components + wrapDocument; pure string assertions, no DOM/jsdom required
 
 ## In Progress
-- [ ] Phase 4 — Zero-Fetch Sync (Task 4.2 next: useSync hook)
+- [ ] Phase 4 — Zero-Fetch Sync (Task 4.3 next: WebSocket binary transport server)
+
+## useSync hook design decisions (Task 4.2)
+- Package: `packages/core` (`@nexus/core`), TypeScript ESM, peer depends on React ^18||^19
+- `crdt-loader.ts` — singleton async loader for the WASM module; init runs exactly once even with concurrent hook mounts; uses a module-level promise to dedup concurrent calls
+- `use-sync.ts` — `useSync(collection, id, options?)` returns `[state, update]`
+  - `state`: `Record<string, string>` — snapshot of all root CRDT keys, updated on every incoming frame
+  - `update(key, value)`: applies local change to doc, dispatches optimistic state, sends `doc.save()` bytes to server over WebSocket
+- WebSocket URL: `ws[s]://<host>/sync/<collection>/<id>` (auto wss on HTTPS); overridable via `options.serverUrl`
+- First binary frame from server = full snapshot → loaded via `CrdtDoc.load()`; subsequent frames = deltas → merged via `CrdtDoc.merge()`
+- Empty binary frame (0 bytes) = server signals empty doc → hooks dispatches ready with empty state
+- WASM memory is freed (`doc.free()`) on hook unmount via `useEffect` cleanup
+- `ws.binaryType = "arraybuffer"` — frames arrive as `ArrayBuffer`, converted to `Uint8Array` before CRDT calls
+- Manual Jest mock at `__mocks__/@nexus/crdt.js` + `moduleNameMapper` in jest.config.js — WASM cannot run in Node; mock provides the full API surface as no-ops; never affects runtime builds
+- 16 unit tests: singleton loader, API surface, docToState, buildWsUrl (encoding, fallback), send/no-send based on WS ready state
 
 ## WASM Bridge design decisions (Task 4.1)
 - Package: `packages/crdt` (`@nexus/crdt`), Rust crate with `crate-type = ["cdylib", "rlib"]`
