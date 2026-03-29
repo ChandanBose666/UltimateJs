@@ -1,0 +1,24 @@
+{
+  "name": "@nexus/crdt",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Automerge CRDT document compiled to WebAssembly — Zero-Fetch Sync engine for Nexus.js",
+  "main": "./pkg/nexus_crdt.js",
+  "types": "./pkg/nexus_crdt.d.ts",
+  "files": [
+    "pkg/nexus_crdt_bg.wasm",
+    "pkg/nexus_crdt.js",
+    "pkg/nexus_crdt.d.ts",
+    "pkg/nexus_crdt_bg.wasm.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "import": "./pkg/nexus_crdt.js",
+      "types": "./pkg/nexus_crdt.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "wasm-pack build --target web --out-dir pkg"
+  },
+  "sideEffects": false
+}

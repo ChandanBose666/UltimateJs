@@ -14,6 +14,7 @@ NexusJs/
 │   └── web/                  # Vite dev app (future: demo/docs site)
 ├── packages/
 │   ├── compiler/             # Rust crate — SWC-based AST analysis + WASM output
+│   ├── crdt/                 # Rust crate — Automerge CRDT compiled to WASM (@nexus/crdt)
 │   ├── core/                 # (upcoming) TS runtime core
 │   ├── primitives/           # TS types: Stack/Text/Action/Input + NexusRenderer<TNode>
 │   ├── web/                  # Web renderer: maps primitives → HTML + inline styles
@@ -123,6 +124,7 @@ src/
 - Icon slots render the raw icon string — intended to be swapped for an icon library in user code
 
 - [x] Task 3.4 — Email Renderer: `@nexus/email` — maps all four primitives to MSO-safe HTML strings
+- [x] Task 4.1 — WASM Bridge: `@nexus/crdt` — Automerge CRDT document compiled to WebAssembly via wasm-pack
 
 ## Email Renderer design decisions (Task 3.4)
 - TNode = string — the only renderer that doesn't use React; all functions return raw HTML strings
@@ -138,7 +140,20 @@ src/
 - 40 unit tests cover all four components + wrapDocument; pure string assertions, no DOM/jsdom required
 
 ## In Progress
-- [ ] Phase 4 — Zero-Fetch Sync (Task 4.1 next)
+- [ ] Phase 4 — Zero-Fetch Sync (Task 4.2 next: useSync hook)
+
+## WASM Bridge design decisions (Task 4.1)
+- Package: `packages/crdt` (`@nexus/crdt`), Rust crate with `crate-type = ["cdylib", "rlib"]`
+- Uses `automerge 0.8` with `features = ["wasm"]` — ships its own `js-sys`/`web-sys`/`wasm-bindgen` via feature flag
+- `CrdtDoc` is a flat key-value document (root Automerge Map) — sufficient for component state sync
+- API: `new()`, `get()`, `get_json()`, `set()`, `set_number()`, `set_bool()`, `delete()`, `save()`, `load()`, `merge()`, `keys()`
+- `save()` → `Vec<u8>` / `Uint8Array` (Automerge binary format); `load()` and `merge()` both accept raw bytes
+- `merge()` is CRDT-safe: concurrent writes resolve deterministically, no data lost
+- Built with `wasm-pack build --target web --out-dir pkg` → outputs to `packages/crdt/pkg/`
+- Workspace `package.json` at crate root wraps the `pkg/` output as `@nexus/crdt`; `pnpm-workspace.yaml` picks it up via `packages/*`
+- `turbo.json` already has `outputs: ["pkg/**"]` — WASM build artifacts are cached correctly
+- automerge 0.8 API notes: range iterators yield `MapRangeItem`/`ListRangeItem` structs (not tuples); map values are `ValueRef<'_>` / `ScalarValueRef<'_>` (not `Value`/`ScalarValue`)
+- 12 unit tests: new/empty, set+get string/number/bool, delete, missing key, save+load roundtrip, merge independent docs, concurrent merge, keys listing, get_json
 
 ## Turborepo Pipeline Logic
 - `build` depends on `^build` — upstream packages build first
