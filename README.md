@@ -693,9 +693,9 @@ The CLI injects axe-core into a JSDOM sandbox — no browser required. The WCAG 
 
 `create-blazefw` is the official scaffolding CLI for BlazeFW. It sets up a new project interactively — picking your renderer and pillars — so you only install the packages you actually need.
 
-> **Status:** The CLI is built and ready. It will be available via `npx` once the `@blazefw` packages are published to npm. Until then, see [Getting Started](#getting-started) for the local development path.
+> All `@blazefw` packages are live on npm. Run `npx create-blazefw` to scaffold a new project instantly.
 
-### `npx create-blazefw my-app` *(coming soon)*
+### `npx create-blazefw my-app`
 
 ```bash
 npx create-blazefw my-app
@@ -819,7 +819,7 @@ BlazeFW/
 
 ## Getting Started
 
-### Option 1 — CLI *(once published to npm)*
+### Option 1 — CLI *(recommended)*
 
 ```bash
 npx create-blazefw my-app
@@ -831,9 +831,9 @@ That's it. The CLI prompts you for a renderer and which pillars to include, inst
 
 ---
 
-### Option 2 — Clone the monorepo *(available now)*
+### Option 2 — Clone the monorepo *(for contributors)*
 
-Use this path while the packages are pending npm publication, or if you want to contribute to the framework itself.
+Use this path if you want to contribute to the framework itself or run the full test suite.
 
 ```bash
 # 1. Clone and install
