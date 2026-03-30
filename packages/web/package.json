@@ -1,6 +1,6 @@
 {
   "name": "@blazefw/web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "BlazeFW web renderer — maps Stack, Text, Action, and Input primitives to React components with inline styles and CSS custom property theming, zero Tailwind dependency",
   "type": "module",
   "main": "./src/index.ts",
@@ -30,5 +30,7 @@
     "ts-jest": "^29.0.0",
     "typescript": "^5.4.0"
   },
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@blazefw/primitives",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "BlazeFW semantic UI type contracts — Stack, Text, Action, and Input primitives with design-token-based spacing and color for web, native, and email renderers",
   "type": "module",
   "main": "./src/index.ts",
@@ -11,5 +11,7 @@
   "devDependencies": {
     "typescript": "^5.4.0"
   },
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }

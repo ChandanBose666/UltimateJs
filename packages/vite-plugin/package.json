@@ -1,6 +1,6 @@
 {
   "name": "@blazefw/vite-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "BlazeFW Vite plugin — intercepts .ultimate.tsx files and routes them through the Rust compiler binary via stdin/stdout JSON bridge, splitting each file into server and client bundles automatically",
   "type": "module",
   "main": "./src/index.ts",
@@ -12,5 +12,7 @@
     "vite": "^5.0.0",
     "typescript": "^5.4.0"
   },
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }
