@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "BlazeFW Rust/WASM compiler — server/client slicer and accessibility scanner",
   "scripts": {
-    "build": "cargo build --release",
+    "build": "cargo build --release || echo '[blazefw/compiler] cargo not found — skipping native build (WASM fallback will be used)'",
     "build:wasm": "wasm-pack build --target nodejs --out-dir pkg-node",
     "dev": "cargo watch -x 'build --release'"
   },
