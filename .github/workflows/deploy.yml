@@ -7,7 +7,9 @@ on:
     branches: [main]
 
 # Vercel Git integration handles production deploys automatically on push.
-# This workflow validates the build works without Rust (WASM fallback path).
+# `build`        — validates the monorepo builds without Rust (WASM-stub fallback path).
+# `scaffold-e2e` — validates `create-blazefw` produces a working project and the real
+#                  compiler (native + WASM) can slice its `.ultimate.tsx` output.
 
 jobs:
   build:
@@ -42,3 +44,44 @@ jobs:
         run: |
           WASM_COUNT=$(find apps/web/dist -name "*.wasm" | wc -l)
           echo "Found $WASM_COUNT .wasm files"
+
+  scaffold-e2e:
+    runs-on: ubuntu-latest
+    # Rust IS installed here — exercises the native compiler binary, the WASM
+    # build, AND the create-blazefw scaffold end-to-end.
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packages/compiler -> target
+
+      - name: Install wasm-pack
+        run: cargo install wasm-pack --locked
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (native compiler + JS packages)
+        run: pnpm build
+
+      - name: Compiler unit tests (cargo)
+        run: cargo test --manifest-path packages/compiler/Cargo.toml
+
+      - name: Build the compiler WASM (the published-consumer path)
+        run: pnpm --filter @blazefw/compiler build:wasm
+
+      - name: Scaffold + slice E2E
+        run: node scripts/scaffold-e2e.mjs
