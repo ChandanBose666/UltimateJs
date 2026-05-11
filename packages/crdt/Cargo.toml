@@ -1,6 +1,6 @@
 [package]
 name = "blazefw-crdt"
-version = "0.1.3"
+version = "0.1.5"
 edition = "2021"
 description = "Automerge CRDT document compiled to WebAssembly — the Zero-Fetch Sync engine for BlazeFW"
 repository = "https://github.com/ChandanBose666/BlazeFW"

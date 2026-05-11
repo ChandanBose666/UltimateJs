@@ -1,6 +1,6 @@
 {
   "name": "@blazefw/crdt",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "type": "module",
   "description": "Automerge CRDT document compiled to WebAssembly — Zero-Fetch Sync engine for Blazefw",
   "main": "./pkg/blazefw_crdt.js",
