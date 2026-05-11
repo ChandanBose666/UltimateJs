@@ -10,7 +10,8 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=src"
   },
   "dependencies": {
-    "@blazefw/primitives": "workspace:*"
+    "@blazefw/primitives": "workspace:*",
+    "framer-motion": "^12.38.0"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
