@@ -297,6 +297,10 @@ importers:
         version: 5.9.3
 
   packages/vite-plugin:
+    dependencies:
+      '@blazefw/compiler':
+        specifier: workspace:*
+        version: link:../compiler
     devDependencies:
       typescript:
         specifier: ^5.4.0
